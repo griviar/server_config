@@ -1,0 +1,43 @@
+###########################
+# Import other config files
+###########################
+
+# Source def Colors
+if [ -f $HOME/.config/bash/01-resources ]; then
+	    source $HOME/.config/bash/01-resources
+fi
+
+# Source aliases
+if [ -f $HOME/.config/bash/02-aliases ]; then
+	    source $HOME/.config/bash/02-aliases
+fi
+# Source Functions
+if [ -f $HOME/.config/bash/03-functions ]; then
+		source $HOME/.config/bash/03-functions
+fi
+
+# Source auto-complition
+if [ -f /etc/profile.d/bash_completion.sh ]; then
+		source /etc/profile.d/bash_completion.sh
+fi
+
+#################
+# History setting
+#################
+# History size
+export HISTFILESIZE=10000
+export HISTSIZE=500
+#History format
+export HISTTIMEFORMAT="%h %d %H:%M:%S "
+
+# Don't put duplicate lines in the history and do not add lines that start with a space
+export HISTCONTROL=erasedups:ignoredups:ignorespace
+
+# Check the window size after each command and, if necessary, update the values of LINES and COLUMNS
+shopt -s checkwinsize
+
+# Causes bash to append to history instead of overwriting it so if you start a new terminal, you have old session history
+shopt -s histappend
+PROMPT_COMMAND='history -a'
+
+export PS1="\\n\[$cyan\],\[$default_text\](\[$green\]\t\[$default_text\])\[$cyan\]===\[$default_text\](\[$green\]\w\[$default_text\])\[$cyan\]\n\\\`\[$cyan\]--[\[$bold\]\$\[$bold_off\]]===\[$bold\]» \[$default_text\]"

@@ -1,0 +1,41 @@
+###################
+# tmux aliases
+###################
+if command -v tmux >/dev/null 2>&1; then
+    alias tmn="tmux new -s"
+    alias tma="tmux a -t"
+    alias tmls="tmux ls"
+    alias tm="tmux new-session -A -s main"
+fi
+
+###################
+# ls aliases
+###################
+export LS_OPTIONS='--color=auto'
+eval "$(dircolors)"
+alias ls='ls $LS_OPTIONS'
+alias ll='ls $LS_OPTIONS -l'
+alias l='ls $LS_OPTIONS -lA'
+
+###################
+# cd aliases
+###################
+alias ..='cd ..;pwd'
+alias ...='cd ../..;pwd'
+alias ....='cd ../../..;pwd'
+
+###################
+# Other
+###################
+# Make grep with color
+alias grep='GREP_COLOR="1;33;40" LANG=C grep --color=auto'
+# Press c to clear the terminal screen.
+alias c='clear'
+# Clear screen and show content
+alias cs='clear;ls'
+# Press h to view the bash history.
+alias h='history'
+
+if command -v tree >/dev/null 2>&1; then
+    alias tree='tree --dirsfirst -F'
+fi
