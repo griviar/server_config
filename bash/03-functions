@@ -6,3 +6,10 @@
 function hg() {
     history | grep "$1";
 }
+
+# Find information about ip
+if command -v jq >/dev/null 2>&1; then
+    function ipa {
+        curl -s https://ifconfig.co/json?ip=$1 | jq 'del(.user_agent)'
+    }
+fi
