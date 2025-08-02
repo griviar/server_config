@@ -28,7 +28,7 @@ alias ....='cd ../../..;pwd'
 # Other
 ###################
 # Make grep with color
-alias grep='GREP_COLOR="1;33;40" LANG=C grep --color=auto'
+alias grep='GREP_COLORS="mt=1;33;40" LANG=C grep --color=auto'
 # Press c to clear the terminal screen.
 alias c='clear'
 # Clear screen and show content
