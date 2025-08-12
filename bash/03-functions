@@ -8,8 +8,8 @@ function hg() {
 }
 
 # Find information about ip
-if (command -v jq >/dev/null 2>&1) and (command -v curl >/dev/null 2>&1); then
-    function ipa {
-        curl -s https://ifconfig.co/json?ip=$1 | jq 'del(.user_agent)'
+if command -v jq >/dev/null 2>&1 && command -v curl >/dev/null 2>&1; then
+    ipa() {
+        curl -s "https://ifconfig.co/json?ip=$1" | jq 'del(.user_agent)'
     }
 fi
