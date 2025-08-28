@@ -16,6 +16,11 @@ if [ -f $HOME/.config/bash/03-functions ]; then
 		source $HOME/.config/bash/03-functions
 fi
 
+# Source cmd script
+if [ -f $HOME/.config/bash/04-cmd ]; then
+		source $HOME/.config/bash/04-cmd
+fi
+
 # Source auto-complition
 if [ -f /etc/profile.d/bash_completion.sh ]; then
 		source /etc/profile.d/bash_completion.sh

@@ -1,0 +1,77 @@
+# Функция cmd для запуска кастомных команд
+# Принимает один аргумент - имя команды
+cmd() {
+    # Локальная переменная для хранения имени команды
+    local cmd_name="${1}"
+    # Ассоциативный массив для хранения списка команд
+    declare -A cmd_list
+
+    # Ключи - это имена команд, значения - сами команды
+    cmd_list=(
+        [ps_top5_cpu]="ps --sort=-%cpu -eo user,pid,ppid,state,comm | head -n6"
+        [ps_top5_mem]="ps --sort=-%mem -eo user,pid,ppid,state,comm | head -n6"
+        [cron_add]='{ crontab -l; echo "0 3 * * 0 ls -l"; } | crontab -'
+        [du_top20]='du -h / 2> /dev/null | sort -rh | head -n 20'
+        [journal_vacuum]='journalctl --vacuum-size=800M'
+        [lsof_opened]='lsof +D /opt'
+        [ss_listen]="ss -tuln | awk '{print \$5}' | grep -Eo ':[0-9]+$' | sort -t: -k2 -n -u"
+        [sed_replace]="sed -i 's/old_text/new_text/g' file.txt"
+        [find_chmod_d]="find /path -type f -exec chmod 644 {} \\;"
+        [find_chmod_f]="find /path -type f -exec chmod 755 {} \\;"
+        [ossl_encrypt_tar]='tar -czf - /var/log/apt | openssl enc -aes-256-cbc -pbkdf2 -e -out ./logs.tar.gz.enc'
+        [ossl_decrypt_file]='openssl enc -aes-256-cbc -pbkdf2 -d -in ./logs.tar.gz.enc -out ./logs.tar.gz'
+        [urandom_str]="cat /dev/urandom | tr -dc 'a-zA-Z0-9' | fold -w 8 | head -n 1"
+        [dig]="dig r4ven.me +short +answer +identify"
+        [icmp_ignore]="echo 1 | sudo tee /proc/sys/net/ipv4/icmp_echo_ignore_all"
+        [docker_network]="docker network create --opt com.docker.network.bridge.name=br-mynetwork --opt com.docker.network.enable_ipv6=false --driver bridge --subnet 172.22.23.0/24 --gateway 172.22.23.1 my_network"
+        [tcpdump_dhost_dport]="tcpdump -i any -nn -q dst host 10.11.12.13 and dst port 443"
+        [tcpdump_wrtie_pacp]="tcpdump -nn -i any host 10.11.12.13 -w ./tcpdump.pcap"
+        [tcpdump_read_pcap]="sudo -u tcpdump tcpdump -qns 0 -X -r ./tcpdump.pcap | less"
+        [s_status]="systemctl status "
+        [s_stop]="systemctl stop "
+        [s_start]="systemctl start "
+    )
+
+    # Проверка наличия команды в массиве, или если запрошена справка
+    if [[ -z ${cmd_list[$cmd_name]} || -z "$cmd_name" || "$cmd_name" == "-h" ]]; then
+        # Вывод списока доступных команд
+        echo "AVAILABLE COMMANDS:"
+        printf "%-20s %s\n" "Key" "Command"
+        echo "----------------------------"
+        # Перебор всех ключей в массиве с их выводом
+        for key in "${!cmd_list[@]}"; do
+            printf "%-20s %s\n" "$key" "${cmd_list[$key]}"
+        done | sort
+        return 0
+    else
+        # Проверяем, запущен ли скрипт в интерактивной оболочке Bash и есть ли подключенный терминал
+        if [[ -n "$BASH" && -t 0 ]]; then
+            # Получаем команду из списка команд по заданному имени и выводим ее
+            local command_to_insert="${cmd_list[$cmd_name]}"
+            bind '"\e[0n": "'"${command_to_insert}"'"'
+            printf '\e[5n'
+        else
+            echo "${cmd_list[$cmd_name]}"
+        fi
+        return 0
+    fi
+}
+
+# Функция для автодополнения команд
+_cmd_completion() {
+    # Выполнение функции cmd, но только для получения ключей
+    local cur prev opts
+    COMPREPLY=()
+    cur="${COMP_WORDS[COMP_CWORD]}"
+    prev="${COMP_WORDS[COMP_CWORD-1]}"
+    opts=$(cmd -h | awk 'NR>4 {print $1}')
+
+    # Если текущее слово (cur) не пустое, ищем соответствующие варианты автодополнения
+    if [[ ${cur} == * ]] ; then
+        COMPREPLY=( $(compgen -W "${opts}" -- ${cur}) )
+        return 0
+    fi
+}
+
+# Регистрация функции автодополнения для команды/функции cmd
+complete -F _cmd_completion cmd
