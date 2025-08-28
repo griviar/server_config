@@ -40,4 +40,5 @@ shopt -s checkwinsize
 shopt -s histappend
 PROMPT_COMMAND='history -a'
 
-export PS1="\\n\[$cyan\],\[$default_text\](\[$green\]\t\[$default_text\])\[$cyan\]===\[$default_text\](\[$green\]\w\[$default_text\])\[$cyan\]\n\\\`\[$cyan\]--[\[$bold\]\$\[$bold_off\]]===\[$bold\]» \[$default_text\]"
+export PS1="\\n\[$cyan\],\[$default_text\](\[$green\]\t\[$default_text\])\[$cyan\]===\[$default_text\](\[$green\]\h\[$default_text\])\[$cyan\]===\[$default_text\](\[$green\]\w\[$default_text\])\[$cyan\]\n\\\`\[$cyan\]--[\[$bold\]\$\[$bold_off\]]===\[$bold\]» \[$default_text\]"
+
