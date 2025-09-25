@@ -46,4 +46,4 @@ shopt -s histappend
 PROMPT_COMMAND='history -a'
 
 # export PS1="\\n\[$cyan\],\[$default_text\](\[$green\]\t\[$default_text\])\[$cyan\]===\[$default_text\](\[$green\]\h\[$default_text\])\[$cyan\]===\[$default_text\](\[$green\]\w\[$default_text\])\[$cyan\]\n\\\`\[$cyan\]--[\[$bold\]\$\[$bold_off\]]===\[$bold\]» \[$default_text\]"
-export PS1='\[\e[38;5;123m\],\[\e[0m\](\[\e[38;5;157m\]\t\[\e[0m\])\[\e[38;5;123m\]==\[\e[0m\](\[\e[38;5;157m\]\h\[\e[0m\])\[\e[38;5;123m\]==\[\e[0m\](\[\e[38;5;157m\]\w\[\e[0m\])\n\[\e[38;5;123m\]'"'"'--[\\$]\[\e[2;4m\]===>\[\e[38;5;87m\]>\[\e[0m\]'
+export PS1='\[\e[38;5;116m\],\[\e[0m\](\[\e[38;5;114m\]\t\[\e[0m\])\[\e[38;5;116m\]==\[\e[0m\](\[\e[38;5;114m\]\h\[\e[0m\])\[\e[38;5;116m\]==\[\e[0m\](\[\e[38;5;114m\]\w\[\e[0m\])\n\[\e[38;5;116m\]'"'"'--[\\$]\[\e[4m\]===>>\[\e[0m\]'
