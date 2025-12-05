@@ -25,6 +25,11 @@ alias ...='cd ../..;pwd'
 alias ....='cd ../../..;pwd'
 
 ###################
+# iftop
+###################
+alias iftop='TERM=xterm iftop'
+
+###################
 # Other
 ###################
 # Make grep with color
