@@ -26,6 +26,11 @@ if [ -f /etc/profile.d/bash_completion.sh ]; then
 		source /etc/profile.d/bash_completion.sh
 fi
 
+# Add Go binary path if Go is installed
+if [ -d /usr/local/go/bin ]; then
+    export PATH="$PATH:/usr/local/go/bin"
+fi
+
 #################
 # History setting
 #################
